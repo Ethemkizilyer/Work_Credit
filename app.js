@@ -68,7 +68,7 @@ console.log(tutar.value, typeof tutar.value);
   </tbody>
         </table>`;
 
-        if(tutar.value > 1000000 ){
+        if((tutar.value).length >= 7 ){
             alert("Kefilin Var Mı?")
         }
 }})
