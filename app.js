@@ -34,7 +34,8 @@ hesap.addEventListener("click",(item) =>{
 
     const faiz = oran / 100;
     taksit = (tutar.value * (faiz * (1 + faiz) ** vade.value)) / ((1 + faiz) ** vade.value - 1)
-    let toplam = ((faiz * tutar.value) + Number(tutar.value) );
+    
+    let toplam = (taksit * vade.value).toFixed(2);
     console.log(toplam, typeof toplam);
 
 toplam = numberWithCommas(toplam);
