@@ -9,43 +9,41 @@ let taksit = 0
 // tutar.value = numberWithCommas(tutar.value);
 
 hesap.addEventListener("click",(item) =>{
+   if ((tutar.value.length >= 7) & confirm("Kefilin Var Mı?")) {
+     // item.preventDefault();
+     if (!kredi.value || !vade.value || !tutar.value) {
+       alert("Eksik Giriş Yaptınız");
+     } else {
+       if (kredi.value === "Konut Kredisi") {
+         oran = 1.29;
+       } else if (kredi.value === "İhtiyaç Kredisi") {
+         oran = 1.99;
+       } else if (kredi.value === "Araç Kredisi") {
+         oran = 1.79;
+       }
+       function numberWithCommas(x) {
+         var parts = x.toString().split(".");
+         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-    // item.preventDefault();
-    if (!kredi.value || !vade.value || !tutar.value) {
-      alert("Eksik Giriş Yaptınız");
-      
-    }
-    else{
-    if (kredi.value === "Konut Kredisi") {
-      oran = 1.29;
-    } else if (kredi.value === "İhtiyaç Kredisi") {
-      oran = 1.99;
-    } else if (kredi.value === "Araç Kredisi") {
-      oran = 1.79;
-    } 
- function numberWithCommas(x) {
-   var parts = x.toString().split(".");
-   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+         return parts.join(",");
+       }
 
-   return parts.join(",");
- }
+       const faiz = oran / 100;
+       taksit =
+         (tutar.value * (faiz * (1 + faiz) ** vade.value)) /
+         ((1 + faiz) ** vade.value - 1);
 
+       let toplam = (taksit * vade.value).toFixed(2);
+       console.log(toplam, typeof toplam);
 
-
-    const faiz = oran / 100;
-    taksit = (tutar.value * (faiz * (1 + faiz) ** vade.value)) / ((1 + faiz) ** vade.value - 1)
-    
-    let toplam = (taksit * vade.value).toFixed(2);
-    console.log(toplam, typeof toplam);
-
-toplam = numberWithCommas(toplam);
-taksit = numberWithCommas(taksit);
-// taksit = Number(taksit)
-taksit = taksit.split(",")[0] + `,` + taksit.split(",")[1].slice(0, 2);
-// console.log(taksit, typeof taksit);
-tutar.value = numberWithCommas(tutar.value);
-console.log(tutar.value, typeof tutar.value);
-    sonuc.innerHTML = `<h2 class="mt-3 text-warning text-center">Kredi Bilgileri</h2>
+       toplam = numberWithCommas(toplam);
+       taksit = numberWithCommas(taksit);
+       // taksit = Number(taksit)
+       taksit = taksit.split(",")[0] + `,` + taksit.split(",")[1].slice(0, 2);
+       // console.log(taksit, typeof taksit);
+       tutar.value = numberWithCommas(tutar.value);
+       console.log(tutar.value, typeof tutar.value);
+       sonuc.innerHTML = `<h2 class="mt-3 text-warning text-center">Kredi Bilgileri</h2>
         <table class="table table-bordered border-warning mt-4">
            <tbody>
     <tr>
@@ -68,8 +66,8 @@ console.log(tutar.value, typeof tutar.value);
     </tr>
   </tbody>
         </table>`;
-
-        if((tutar.value).length >= 7 ){
-            alert("Kefilin Var Mı?")
-        }
-}})
+     }
+   }
+  else{
+    alert("ÜZGÜNÜZ BU ŞARTLARDA SİZE KREDİ VEREMİYORUZ")
+  }})
